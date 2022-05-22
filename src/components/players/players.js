@@ -4,9 +4,28 @@ import useStore from "../store/store";
 import Grid from "@mui/material/Grid";
 import LoaderDemo from "../inputcomponents/loader";
 import GroupSizesColors from "../inputcomponents/playerbuttons";
+import SearchIcon from "@mui/icons-material/Search";
+import TextField from "@mui/material/TextField";
+
+const search = {
+  color: "white",
+  alignSelf: "flex-end",
+  marginBottom: "5px",
+  marginRight: "10px",
+};
+const searchinput = {
+  display: "flex",
+  paddingLeft: "20px",
+  paddingRight: "20px",
+  marginTop: "5px",
+  marginBottom: "5px",
+  position: "relative",
+  bottom: "-80px",
+};
 
 const PlayerNames = () => {
   const {
+    goalkeeper,
     players,
     fetch,
     setGk,
@@ -37,6 +56,12 @@ const PlayerNames = () => {
 
   const [loading, setloading] = useState(false);
 
+  const [filter, setFilter] = useState("");
+
+  const handleSearchChange = (e) => {
+    setFilter(e.target.value);
+  };
+
   const url = "playerlist.json";
 
   useEffect(() => {
@@ -60,7 +85,9 @@ const PlayerNames = () => {
     //centerbacks
     const centerbackslist = players.filter(
       (player) =>
-        player.club_position === "LCB" || player.club_position === "RCB"
+        player.club_position === "LCB" ||
+        player.club_position === "RCB" ||
+        player.club_position === "CB"
     );
     setCenterbacks(centerbackslist);
 
@@ -72,7 +99,10 @@ const PlayerNames = () => {
 
     //defmids
     const defmidslist = players.filter(
-      (player) => player.club_position === "CDM"
+      (player) =>
+        player.club_position === "CDM" ||
+        player.club_position === "RDM" ||
+        player.club_position === "LDM"
     );
     setDefmids(defmidslist);
 
@@ -91,19 +121,23 @@ const PlayerNames = () => {
 
     //lwings
     const lwingslist = players.filter(
-      (player) => player.club_position === "LW"
+      (player) => player.club_position === "LW" || player.club_position === "LM"
     );
     setLwings(lwingslist);
 
     //rwings
     const rwingslist = players.filter(
-      (player) => player.club_position === "RW"
+      (player) => player.club_position === "RW" || player.club_position === "RM"
     );
     setRwings(rwingslist);
 
     //strikers
     const strikerslist = players.filter(
-      (player) => player.club_position === "ST"
+      (player) =>
+        player.club_position === "ST" ||
+        player.club_position === "CF" ||
+        player.club_position === "RS" ||
+        player.club_position === "LS"
     );
     setStrikers(strikerslist);
 
@@ -259,6 +293,21 @@ const PlayerNames = () => {
     }, 1500);
   };
 
+  const randomize = () => {
+    chooseGk();
+    chooseRb();
+    chooseCb();
+    chooseCb2();
+    chooseLb();
+    chooseCdm();
+    chooseCm();
+    chooseCam();
+    chooseRw();
+    chooseLw();
+    chooseSt();
+    chooseSub();
+  };
+
   return (
     <>
       <div>
@@ -276,13 +325,32 @@ const PlayerNames = () => {
           chooseLw={chooseLw}
           chooseSt={chooseSt}
           chooseSub={chooseSub}
+          randomize={randomize}
         />
 
-        <Grid container direction="row" justifyContent="center">
+        <div style={searchinput}>
+          <SearchIcon style={search} />
+          <TextField
+            inputProps={{ style: { fontSize: "1.5em", color: "gray" } }}
+            InputLabelProps={{
+              style: { fontSize: "1.5em", color: "gray" },
+            }}
+            label="Search Player"
+            variant="standard"
+            onChange={handleSearchChange}
+          />
+        </div>
+
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          marginTop="100px"
+        >
           {Array.isArray(players) &&
-            players.map((player) => {
-              return (
-                <>
+            players.map(
+              (player) =>
+                player.short_name?.toLowerCase().includes(filter) && (
                   <Grid item xs={10} sm={6} md={3}>
                     <PlayerCard
                       club={player.club_name}
@@ -303,9 +371,8 @@ const PlayerNames = () => {
                       speed={player.goalkeeping_speed}
                     />
                   </Grid>
-                </>
-              );
-            })}
+                )
+            )}
         </Grid>
       </div>
     </>

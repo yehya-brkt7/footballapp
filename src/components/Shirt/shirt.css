@@ -1,0 +1,14 @@
+@media only screen and (max-width: 900px) {
+  .shirt {
+    transform: scale(0.6);
+  }
+
+  #player {
+    font-size: 3vw;
+  }
+}
+
+.player {
+  font-size: 18px;
+  font-weight: 500;
+}
