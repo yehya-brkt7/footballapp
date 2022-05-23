@@ -156,7 +156,7 @@ const PlayerNames = () => {
     setGk({ gk: chosengk });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 rightback
@@ -168,7 +168,7 @@ const PlayerNames = () => {
     setRb({ rb: chosenrb });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 left back
@@ -180,7 +180,7 @@ const PlayerNames = () => {
     setLb({ lb: chosenlb });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 centerback
@@ -193,7 +193,7 @@ const PlayerNames = () => {
     setCb({ cb: chosencb });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose second center back
@@ -206,7 +206,7 @@ const PlayerNames = () => {
     setCb2({ cb: chosencb2 });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 cdm
@@ -218,7 +218,7 @@ const PlayerNames = () => {
     setCdm({ cdm: chosencdm });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 cm
@@ -230,7 +230,7 @@ const PlayerNames = () => {
     setCm({ cm: chosencm });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 cam
@@ -242,7 +242,7 @@ const PlayerNames = () => {
     setCam({ cam: chosencam });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 lwing
@@ -254,7 +254,7 @@ const PlayerNames = () => {
     setLw({ lw: chosenlw });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 rwing
@@ -266,7 +266,7 @@ const PlayerNames = () => {
     setRw({ rw: chosenrw });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 striker
@@ -278,19 +278,19 @@ const PlayerNames = () => {
     setSt({ st: chosest });
     setTimeout(() => {
       setloading(false);
-    }, 1500);
+    }, 500);
   };
 
   //function to choose 1 sub
   const chooseSub = () => {
     setloading(true);
+    setTimeout(() => {
+      setloading(false);
+    }, 500);
 
     //assign player
     const chosensub = subs[Math.floor(Math.random() * subs.length)];
     setSub({ sub: chosensub });
-    setTimeout(() => {
-      setloading(false);
-    }, 1500);
   };
 
   const randomize = () => {
