@@ -6,6 +6,10 @@ import LoaderDemo from "../inputcomponents/loader";
 import GroupSizesColors from "../inputcomponents/playerbuttons";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
+import BasicSelect from "../inputcomponents/dropdownoption";
+import RatingSelectFilter from "../inputcomponents/dropdownRatingFilter";
+import TeamSelectFilter from "../inputcomponents/dropdownTeamFilter";
+import PositionSelectFilter from "../inputcomponents/dropdownPositionFilter";
 
 const search = {
   color: "white",
@@ -18,7 +22,7 @@ const searchinput = {
   paddingLeft: "20px",
   paddingRight: "20px",
   marginTop: "5px",
-  marginBottom: "5px",
+  marginBottom: "15px",
   position: "relative",
   bottom: "-80px",
 };
@@ -78,7 +82,8 @@ const PlayerNames = () => {
 
     //rightbacks
     const rightbacklist = players.filter(
-      (player) => player.club_position === "RB"
+      (player) =>
+        player.club_position === "RB" || player.club_position === "RWB"
     );
     setRightbacks(rightbacklist);
 
@@ -93,7 +98,8 @@ const PlayerNames = () => {
 
     //leftbacks
     const leftbacklist = players.filter(
-      (player) => player.club_position === "LB"
+      (player) =>
+        player.club_position === "LB" || player.club_position === "LWB"
     );
     setLeftbacks(leftbacklist);
 
@@ -109,25 +115,36 @@ const PlayerNames = () => {
     //centermids
     const centermidslist = players.filter(
       (player) =>
-        player.club_position === "RCM" || player.club_position === "LCM"
+        player.club_position === "RCM" ||
+        player.club_position === "LCM" ||
+        player.club_position === "CM"
     );
     setCentermids(centermidslist);
 
     //attmids
     const attmidslist = players.filter(
-      (player) => player.club_position === "CAM"
+      (player) =>
+        player.club_position === "CAM" ||
+        player.club_position === "LAM" ||
+        player.club_position === "RAM"
     );
     setAttmids(attmidslist);
 
     //lwings
     const lwingslist = players.filter(
-      (player) => player.club_position === "LW" || player.club_position === "LM"
+      (player) =>
+        player.club_position === "LW" ||
+        player.club_position === "LM" ||
+        player.club_position === "LF"
     );
     setLwings(lwingslist);
 
     //rwings
     const rwingslist = players.filter(
-      (player) => player.club_position === "RW" || player.club_position === "RM"
+      (player) =>
+        player.club_position === "RW" ||
+        player.club_position === "RM" ||
+        player.club_position === "RF"
     );
     setRwings(rwingslist);
 
@@ -142,7 +159,10 @@ const PlayerNames = () => {
     setStrikers(strikerslist);
 
     //subs
-    const subslist = players.filter((player) => player.club_position === "SUB");
+    const subslist = players.filter(
+      (player) =>
+        player.club_position === "SUB" || player.club_position === "RES"
+    );
     setSubs(subslist);
   }, [players]);
 
@@ -308,6 +328,18 @@ const PlayerNames = () => {
     chooseSub();
   };
 
+  const [option, setOption] = useState();
+  const [clubName, setClubName] = useState("");
+  const [Rating, setRating] = useState("");
+  const [playerPosition, setPlayerPosition] = useState("");
+
+  useEffect(() => {
+    setPlayerPosition("");
+    setClubName("");
+    setRating("");
+    console.log("playerpos", playerPosition);
+  }, [option]);
+
   return (
     <>
       <div>
@@ -328,18 +360,58 @@ const PlayerNames = () => {
           randomize={randomize}
         />
 
-        <div style={searchinput}>
-          <SearchIcon style={search} />
-          <TextField
-            inputProps={{ style: { fontSize: "1.5em", color: "gray" } }}
-            InputLabelProps={{
-              style: { fontSize: "1.5em", color: "gray" },
-            }}
-            label="Search Player"
-            variant="standard"
-            onChange={handleSearchChange}
-          />
-        </div>
+        <Grid container direction="row">
+          <Grid item xs={12} md={3}>
+            <div style={searchinput}>
+              <SearchIcon style={search} />
+              <TextField
+                inputProps={{ style: { fontSize: "1.5em", color: "gray" } }}
+                InputLabelProps={{
+                  style: { fontSize: "1.5em", color: "gray" },
+                }}
+                label="Search Player"
+                variant="standard"
+                onChange={handleSearchChange}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} md={1}></Grid>
+          <Grid item xs={12} md={2} style={searchinput} marginBottom="10px">
+            <div>
+              <BasicSelect
+                option={option}
+                setOption={setOption}
+                loading={loading}
+                setloading={setloading}
+              />
+            </div>
+          </Grid>
+          {option === "overall" ? (
+            <Grid item xs={12} md={2} style={searchinput}>
+              <div>
+                <RatingSelectFilter Rating={Rating} setRating={setRating} />
+              </div>
+            </Grid>
+          ) : option === "club_name" ? (
+            <Grid item xs={12} md={2} style={searchinput}>
+              <div>
+                <TeamSelectFilter
+                  clubName={clubName}
+                  setClubName={setClubName}
+                />
+              </div>
+            </Grid>
+          ) : (
+            <Grid item xs={12} md={2} style={searchinput}>
+              <div>
+                <PositionSelectFilter
+                  playerPosition={playerPosition}
+                  setPlayerPosition={setPlayerPosition}
+                />
+              </div>
+            </Grid>
+          )}
+        </Grid>
 
         <Grid
           container
@@ -350,7 +422,10 @@ const PlayerNames = () => {
           {Array.isArray(players) &&
             players.map(
               (player) =>
-                player.short_name?.toLowerCase().includes(filter) && (
+                player.short_name.toLowerCase().includes(filter) &&
+                player.overall?.toString().includes(Rating) &&
+                player.club_name?.includes(clubName) &&
+                player.club_position?.includes(playerPosition) && (
                   <Grid item xs={10} sm={6} md={3}>
                     <PlayerCard
                       club={player.club_name}
