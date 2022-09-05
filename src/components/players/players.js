@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import PlayerCard from "../playerCard/playerCard";
 import useStore from "../store/store";
 import Grid from "@mui/material/Grid";
@@ -10,6 +10,9 @@ import BasicSelect from "../inputcomponents/dropdownoption";
 import RatingSelectFilter from "../inputcomponents/dropdownRatingFilter";
 import TeamSelectFilter from "../inputcomponents/dropdownTeamFilter";
 import PositionSelectFilter from "../inputcomponents/dropdownPositionFilter";
+// import LazyLoad from "react-lazy-load";
+
+// const PlayerCard = React.lazy(() => import("../playerCard/playerCard"));
 
 const search = {
   color: "white",
@@ -422,11 +425,13 @@ const PlayerNames = () => {
           {Array.isArray(players) &&
             players.map(
               (player) =>
+                player.overall?.toString() > "81" &&
                 player.short_name.toLowerCase().includes(filter) &&
                 player.overall?.toString().includes(Rating) &&
                 player.club_name?.includes(clubName) &&
                 player.club_position?.includes(playerPosition) && (
                   <Grid item xs={10} sm={6} md={3}>
+                    {/* <Suspense fallback={<div> Loading...</div>}> */}
                     <PlayerCard
                       club={player.club_name}
                       position={player.club_position}
@@ -445,6 +450,7 @@ const PlayerNames = () => {
                       positioning={player.goalkeeping_positioning}
                       speed={player.goalkeeping_speed}
                     />
+                    {/* </Suspense> */}
                   </Grid>
                 )
             )}
