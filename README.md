@@ -1,3 +1,9 @@
+FOOTBALL-11 : This project is a football/soccer related app made for fun as football as my favourite hobby. You can randomly choose a team by clicking on the randomize button and you can also randomize each position by clicking on the other buttons. Also includes search, filter and sort options. It is fully responsive and done using the following stack:
+
+React, Zustand, Css modules, Axios to fetch API
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
