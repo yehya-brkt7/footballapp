@@ -10,9 +10,6 @@ import BasicSelect from "../inputcomponents/dropdownoption";
 import RatingSelectFilter from "../inputcomponents/dropdownRatingFilter";
 import TeamSelectFilter from "../inputcomponents/dropdownTeamFilter";
 import PositionSelectFilter from "../inputcomponents/dropdownPositionFilter";
-// import LazyLoad from "react-lazy-load";
-
-// const PlayerCard = React.lazy(() => import("../playerCard/playerCard"));
 
 const search = {
   color: "white",
@@ -340,7 +337,6 @@ const PlayerNames = () => {
     setPlayerPosition("");
     setClubName("");
     setRating("");
-    console.log("playerpos", playerPosition);
   }, [option]);
 
   return (

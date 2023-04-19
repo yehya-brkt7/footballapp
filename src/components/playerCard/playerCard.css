@@ -15,7 +15,6 @@ html {
 }
 
 body {
-  /*background-color: rgba(10, 10, 10, 0.9);*/
   background-image: url("./bg.jpg");
   background-size: cover;
 
@@ -30,11 +29,9 @@ figure {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  /*width: 290px;*/
   height: 305px;
   padding: 20px 20px;
   background-image: url("./bg.jpg");
-
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -120,9 +117,7 @@ figure figcaption h4 {
   line-height: 1.35;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.7);
 }
-/*figure figcaption h4 > span {
-  background-color: #040043;
-}*/
+
 figure figcaption p {
   margin: 0;
   line-height: 1.5;
